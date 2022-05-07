@@ -17,6 +17,18 @@ String::String(size_t n, char ch) : size(n),
 	str[n] = '\0';
 }
 
+String& String::append(String& other)
+{
+	size_t new_size = size + other.size;
+	char* new_str = new char[new_size + 1];
+	strcpy_s(new_str, new_size + 1, str);
+	strcpy_s(new_str + size, other.size + 1, other.str);
+	delete[] str;
+	str = new_str;
+	size = new_size;
+	return *this;
+}
+
 String::~String()
 {
 	Clear();

@@ -3,7 +3,12 @@
 using namespace std;
 
 int main() {
-	String s = String(5, 'q');
+	String s = String("hello, ");
+	cout << s << endl;
+	String s1("world!!");
+	s.append(s1);
+	cout << s << endl;
+	s.append(s);
 	cout << s << endl;
 	return 0;
 }

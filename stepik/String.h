@@ -13,6 +13,7 @@ public:
 	String(char const* text);
 	String(size_t n, char ch);
 	friend ostream& operator<< (ostream& os, String const& s);
+	String& append(String& other);
 	~String();
 
 private:
