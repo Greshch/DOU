@@ -42,6 +42,37 @@ String& String::operator=(char const* s)
 	return *this;
 }
 
+String String::operator+(String& other)
+{
+	// TODO: вставьте здесь оператор return
+	String res = *this;
+	res.append(other);
+	return res;
+}
+
+String& String::operator+=(String& other)
+{
+	// TODO: вставьте здесь оператор return
+	append(other);
+	return *this;
+}
+
+String String::operator+(char const* s)
+{
+	String res = *this;
+	String other = s;
+	res.append(other);
+	return res;
+}
+
+String& String::operator+=(char const* s)
+{
+	// TODO: вставьте здесь оператор return
+	String other = s;
+	append(other);
+	return *this;
+}
+
 String& String::append(String& other)
 {
 	size_t new_size = size + other.size;

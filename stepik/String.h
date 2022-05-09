@@ -15,6 +15,10 @@ public:
 	String(String const& other);
 	String& operator=(String& other);
 	String& operator=(char const* s);
+	String operator+(String& other);
+	String& operator+=(String& other);
+	String operator+(char const* s);
+	String& operator+=(char const* s);
 	friend ostream& operator<< (ostream& os, String const& s);
 	String& append(String& other);
 	~String();
