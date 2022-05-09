@@ -1,5 +1,6 @@
 #include "String.h"
 #include <cstring>
+#include <algorithm>
 
 String::String(char const* text) : size(strlen(text)), 
 								str(new char[size + 1])
@@ -20,6 +21,25 @@ String::String(size_t n, char ch) : size(n),
 String::String(String const& other) :
 	String(other.str)
 {
+}
+
+String& String::operator=(String& other)
+{
+	// TODO: вставьте здесь оператор return
+	if (this != &other)
+	{
+		String(other).Swap(*this);
+	}
+
+	return *this;
+}
+
+String& String::operator=(char const* s)
+{
+	// TODO: вставьте здесь оператор return
+	String other = s;
+	this->Swap(other);
+	return *this;
 }
 
 String& String::append(String& other)
@@ -46,6 +66,13 @@ void String::Clear()
 
 	delete[] str;
 	str = nullptr;
+}
+
+void String::Swap(String& other)
+{
+	using std::swap;
+	swap(this->size, other.size);
+	swap(this->str, other.str);
 }
 
 ostream& operator<<(ostream& os, String const& s)

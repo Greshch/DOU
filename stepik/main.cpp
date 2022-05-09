@@ -3,8 +3,10 @@
 using namespace std;
 
 int main() {
-	String s1 = "hello", s2 = s1;
+	String s1 = "hello";
 	cout << s1 << endl;
-	cout << s2 << endl;
+	s1 = "Glory to the God Jesus!";
+	cout << s1 << endl;
+	
 	return 0;
 }
