@@ -10,14 +10,16 @@ private:
 	char* str;
 
 public:
-	String(char const* text);
+	String(char const* text = "");
 	String(size_t n, char ch);
+	String(String const& other);
+	String& operator=(String& other);
 	friend ostream& operator<< (ostream& os, String const& s);
 	String& append(String& other);
 	~String();
 
 private:
 	void Clear();
-
+	void Swap(String& other);
 };
 

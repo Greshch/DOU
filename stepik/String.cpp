@@ -17,6 +17,11 @@ String::String(size_t n, char ch) : size(n),
 	str[n] = '\0';
 }
 
+String::String(String const& other) :
+	String(other.str)
+{
+}
+
 String& String::append(String& other)
 {
 	size_t new_size = size + other.size;

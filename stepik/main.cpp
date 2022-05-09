@@ -3,12 +3,8 @@
 using namespace std;
 
 int main() {
-	String s = String("hello, ");
-	cout << s << endl;
-	String s1("world!!");
-	s.append(s1);
-	cout << s << endl;
-	s.append(s);
-	cout << s << endl;
+	String s1 = "hello", s2 = s1;
+	cout << s1 << endl;
+	cout << s2 << endl;
 	return 0;
 }
