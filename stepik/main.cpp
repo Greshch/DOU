@@ -1,56 +1,62 @@
 #include <iostream>
-#include <string>
-#include <istream>
 using namespace std;
 
-class Person {
-protected:
-	string name_;
-	int age_;
-
+class Expression {
 public:
-	Person(string const& name, int age) : name_(name), age_(age){}
-	Person() : Person("none", 0) {}
-	string const& name() const { return name_; }
-	int age() const { return age_; }
-	virtual ~Person() {}
-	friend ostream& operator<<(ostream& os, Person const& obj);
+	virtual double evaluate() = 0;
+	virtual ~Expression() {}
 };
 
-class Student : public Person {
-protected:
-	string uni_;
+class Number : public Expression {
+private:
+	double val_;
 
 public:
-	Student(string const& name, int age, string const& univercity) :
-		Person(name, age), uni_(univercity) {}
-	Student() : Person(), uni_("none") {}
-	string const& univercity() const { return uni_; }
-	virtual ~Student() {}
-	friend ostream& operator<<(ostream& os, Student const& obj);
+	Number(double val) : val_(val) {}
+	virtual double evaluate() override { return val_; }
+};
+
+class BinaryOperation : public Expression {
+private:
+	Expression* left_;
+	Expression* right_;
+	char type_oper_;
+
+public:
+	BinaryOperation(Expression* left, char type, Expression* right) : left_(left),
+		type_oper_(type),
+		right_(right) {}
+
+	virtual double evaluate() override {
+		switch (type_oper_) {
+		case '+' :
+			return left_->evaluate() + right_->evaluate();
+
+		case '-':
+			return left_->evaluate() - right_->evaluate();
+
+		case '*':
+			return left_->evaluate() * right_->evaluate();
+
+		case '/':
+			return left_->evaluate() / right_->evaluate();
+		}
+	}
+	
+	~BinaryOperation() { delete left_; delete right_; }
 };
 
 int main() {
-	Person* p = new Person("Abrek Durov", 45);
-	cout << *p << endl;
-	delete p;
-	p = new Student("Bill Geyts", 19, "Briston");
-	cout << *p << endl;
-	delete p;
+	// сначала создаём объекты для подвыражения 4.5 * 5
+	Expression* sube = new BinaryOperation(new Number(4.5), '*', new Number(5));
+	// потом используем его в выражении для +
+	Expression* expr = new BinaryOperation(new Number(3.0), '+', sube);
+
+	// вычисляем и выводим результат: 25.5
+	std::cout << expr->evaluate() << std::endl;
+
+	// тут освобождаются *все* выделенные объекты
+	// (например, sube будет правым операндом expr, поэтому его удалять не нужно)
+	delete expr;
 	return 0;
-}
-
-ostream& operator<<(ostream& os, Person const& obj)
-{
-	// TODO: вставьте здесь оператор return
-	os << "Person::{name=\'" << obj.name() << "\', age=" << obj.age() << "}";
-	return os;
-}
-
-ostream& operator<<(ostream& os, Student const& obj)
-{
-	// TODO: вставьте здесь оператор return
-	Person const& tmp = obj;
-	os << tmp << " univercity: " << obj.univercity();
-	return os;
 }
