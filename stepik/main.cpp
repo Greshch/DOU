@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <cmath>
 using namespace std;
 
 int get_order(char const* str) {
@@ -19,13 +20,25 @@ int get_order(char const* str) {
 }
 
 int my_atoi(char const* str) {
-	return get_order(str);
+	int sum = 0;
+	int n = get_order(str);
+	int order = pow(10, n - 1);
+	//return order;
+	int tmp = order;
+	for (size_t i = 0; i < n; i++)
+	{
+		int cur = order * (str[i] - '0');
+		//cout << cur << "# ";
+		sum += cur;
+		order /= 10;
+	}
+	return sum;
 }
 
 int main() {
 	string str;
 	while (cin >> str) {
-		cout << get_order(str.c_str()) << endl;
+		cout << my_atoi(str.c_str()) << endl;
 	}
 	return 0;
 }
